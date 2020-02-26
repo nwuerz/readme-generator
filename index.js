@@ -50,13 +50,19 @@ inquirer.prompt([
 ])
 .then(function(info) {
     //save user input to const
-    const username = info.username;
-    const project = info.project;
-    const description = info.description;
-    const license = info.license;
-    const installCommand = info.installCommand;
-    const contributing = info.contributing;
-    const testCommand = info.testCommand;
+    // const username = info.username;
+    // const project = info.project;
+    // const description = info.description;
+    // const license = info.license;
+    // const installCommand = info.installCommand;
+    // const contributing = info.contributing;
+    // const testCommand = info.testCommand;
+    const {username, project, description, license, installCommand, contributing, testCommand } = info
+    console.log (username);
+    console.log (project);
+    console.log (description);
+    console.log (license);
+    console.log (installCommand);
     //axios call using user input to grab email and user avatar
     require('dotenv').config();
     const url = `https://api.github.com/users/${username}?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}`;
