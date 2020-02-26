@@ -107,7 +107,7 @@ ${testCommand}
 
 ## Questions
 ___
-(${userAvatar})
+[logo]:${userAvatar}
 If you have any questions about the repo, open an issue or contact directly at ${userEmail}.`;
 
     fs.writeFile("newReadMe.md", newReadMe, function(err) {
