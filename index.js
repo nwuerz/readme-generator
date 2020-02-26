@@ -50,19 +50,19 @@ inquirer.prompt([
 ])
 .then(function(info) {
     //save user input to const
-    // const username = info.username;
-    // const project = info.project;
-    // const description = info.description;
-    // const license = info.license;
-    // const installCommand = info.installCommand;
-    // const contributing = info.contributing;
-    // const testCommand = info.testCommand;
+
     const {username, project, description, license, installCommand, contributing, testCommand } = info
-    console.log (username);
-    console.log (project);
-    console.log (description);
-    console.log (license);
-    console.log (installCommand);
+    
+    // create option with the badge options
+
+    // const userLicense = {
+    //     MIT: "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+    //     Appache: "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)",
+    //     GPL: "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)",
+    //     BDS: "",
+    //     none:"",
+    // }
+
     //axios call using user input to grab email and user avatar
     require('dotenv').config();
     const url = `https://api.github.com/users/${username}?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}`;
@@ -70,9 +70,54 @@ inquirer.prompt([
     axios.get(url).then(function(res) {
         const userAvatar = res.data.avatar_url;
         const userEmail = res.data.email;
-    });
+    
     // create readme using info above /\/\/\
+    const newReadMe = 
+    `## Description
+___
+${project}
 
+## Table of Contents
+___
+* Installation
+* Usage
+* License
+* Contributing
+* Tests
+* Questions
+## Installation
+___
+${installCommand}
+
+## Usage
+___
+${description}
+
+## License
+___
+${license}
+
+## Contributing
+___
+${contributing}
+
+## Tests
+___
+${testCommand}
+
+## Questions
+___
+(${userAvatar})
+If you have any questions about the repo, open an issue or contact directly at ${userEmail}.`;
+
+    fs.writeFile("newReadMe.md", newReadMe, function(err) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log("Success!");
+
+        });
+    });
 
 });
 
