@@ -1,5 +1,7 @@
-var inquirer = require("inquirer");
-var fs = require('fs');
+const fs = require('fs');
+const inquirer = require("inquirer");
+const axios = require("axios");
+
 
 inquirer.prompt([
     {
@@ -45,6 +47,17 @@ inquirer.prompt([
         message:"what command should be run in order to run tests?"
     },
     //if you have any quesions about the repo,open an issue or contact "username" directly @ "user email"
-]);
+])
+.then(function({username}) {
+    require('dotenv').config();
+    const url = `https://api.github.com/users/${username}?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}`;
 
-fs.appendFile("readme.md", )
+    axios.get(url).then(function(res) {
+        console.log(res.data.avatar_url);
+        const userAvatar = res.data.avatar_url;
+        const userEmail = res.data.email;
+    });
+});
+
+// create file
+
