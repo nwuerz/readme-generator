@@ -2,7 +2,7 @@ const fs = require('fs');
 const inquirer = require("inquirer");
 const axios = require("axios");
 
-
+//prompt user for info 
 inquirer.prompt([
     {
         type: "input",
@@ -33,7 +33,7 @@ inquirer.prompt([
     },
     {
         type: "input",
-        name: "command",
+        name: "installCommand",
         message: "what kind of command should be run to install dependencies?",
     },
     {
@@ -43,21 +43,30 @@ inquirer.prompt([
     },
     {
         type:"input",
-        name:"tests",
+        name:"testCommand",
         message:"what command should be run in order to run tests?"
     },
     //if you have any quesions about the repo,open an issue or contact "username" directly @ "user email"
 ])
-.then(function({username}) {
+.then(function(info) {
+    //save user input to const
+    const username = info.username;
+    const project = info.project;
+    const description = info.description;
+    const license = info.license;
+    const installCommand = info.installCommand;
+    const contributing = info.contributing;
+    const testCommand = info.testCommand;
+    //axios call using user input to grab email and user avatar
     require('dotenv').config();
     const url = `https://api.github.com/users/${username}?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}`;
 
     axios.get(url).then(function(res) {
-        console.log(res.data.avatar_url);
         const userAvatar = res.data.avatar_url;
         const userEmail = res.data.email;
     });
-});
+    // create readme using info above /\/\/\
 
-// create file
+
+});
 
